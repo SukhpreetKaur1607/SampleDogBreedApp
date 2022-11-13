@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.visualdx.dogbreedapp.ui.viewModel.MainFragmentViewModel
 import javax.inject.Inject
 
-class MyModelFactory @Inject constructor(private val repository: MainRepository): ViewModelProvider.Factory {
+class MyModelFactory @Inject constructor(private val repository: MainRepository) :
+    ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return if (modelClass.isAssignableFrom(MainFragmentViewModel::class.java)) {

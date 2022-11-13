@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val apiInterface: ApiInterface) {
 
-    fun getAllBreeds(): Flow<List<DogBreed>?> = flow{
-        val res =  apiInterface.getAllBreeds()
+    fun getAllBreeds(): Flow<List<DogBreed>?> = flow {
+        val res = apiInterface.getAllBreeds()
         println(res.isSuccessful)
         println(res.message())
         println(res.errorBody())
@@ -21,20 +21,20 @@ class MainRepository @Inject constructor(private val apiInterface: ApiInterface)
         emit(
             res.body()?.mapDogBreeds()
         )
-    }.catch { e->
+    }.catch { e ->
         println(e)
     }.flowOn(Dispatchers.IO)
 
 
-    fun getRandomImages(breedName:String): Flow<List<String>?> = flow {
+    fun getRandomImages(breedName: String): Flow<List<String>?> = flow {
         val res = apiInterface.getRandomImages(breedName)
         emit(
             res.body()?.message
         )
     }.flowOn(Dispatchers.IO)
 
-    fun getRandomImages(breedName:String,subBreed:String): Flow<List<String>> = flow {
-        val res = apiInterface.getRandomImagesBySubBreed(breedName,subBreed)
+    fun getRandomImages(breedName: String, subBreed: String): Flow<List<String>> = flow {
+        val res = apiInterface.getRandomImagesBySubBreed(breedName, subBreed)
         emit(
             res.body()!!.message
         )

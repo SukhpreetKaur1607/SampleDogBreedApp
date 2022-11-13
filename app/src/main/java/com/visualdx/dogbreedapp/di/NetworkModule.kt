@@ -12,7 +12,6 @@ import javax.inject.Singleton
 class NetworkModule {
 
 
-
     @Singleton
     @Provides
     fun getInstance(): Retrofit {

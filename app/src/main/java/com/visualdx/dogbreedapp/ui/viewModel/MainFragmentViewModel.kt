@@ -1,6 +1,5 @@
 package com.visualdx.dogbreedapp.ui.viewModel
 
-
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,7 +45,7 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
     init {
         viewModelScope.launch {
             requestState.value = ApiState.Loading
-            loading.postValue(true)
+
 
             mainRepository.getAllBreeds()
                 .catch { e ->
@@ -54,11 +53,25 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
                     // showError.value = true
                     return@catch
                 }
-                .combine(searchText) { list, filter ->
+                /*to search  complete subBreedList*/
+                /*.combine(searchText) { list, filter ->
                     list?.filter { master ->
                         master.name.startsWith(filter, false) || master.subBreed.filter { child ->
                             child.name.startsWith(filter, false)
                         }.size > 0
+                    }
+                }*/
+
+                /*Only considering first element of subArray*/
+                .combine(searchText) { list, filter ->
+                    list?.filter { master ->
+                        master.name.startsWith(
+                            filter,
+                            false
+                        ) || (if (master.subBreed.size > 0) (master.subBreed.get(0).name.startsWith(
+                            filter,
+                            false
+                        )) else false)
                     }
                 }
 
@@ -71,9 +84,6 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
                     //  println(_breedName.value)
                     if (it != null)
                         setAdapterData(it)
-
-                    loading.postValue(false)
-                    //println(it.size)
                 }
         }
     }
@@ -93,6 +103,7 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
 
         viewModelScope.launch {
 
+            loading.postValue(true)
             mainRepository.getRandomImages(breedName.value.toString())
                 .catch { e ->
                     requestState.value = ApiState.Failure(e)
@@ -101,6 +112,7 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
                     requestState.value = ApiState.Success(it)
                     _dogImagesList.value = it
                     setRecyclerViewAdapter(it)
+                    loading.postValue(false)
                     println("DogImagesList" + it?.size)
                 }
         }
@@ -109,7 +121,7 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
 
     fun getRandomImagesByBreed() {
         println("DynamicBreed" + breedName.value.toString() + " , " + subBreedName.value.toString())
-
+        loading.postValue(true)
         viewModelScope.launch {
 
             mainRepository.getRandomImages(
@@ -123,6 +135,7 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
                     requestState.value = ApiState.Success(it)
                     _dogImagesList.value = it
                     setRecyclerViewAdapter(it)
+                    loading.postValue(false)
                     println("DogImagesList" + it.size)
                 }
         }

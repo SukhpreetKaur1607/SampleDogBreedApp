@@ -11,8 +11,11 @@ interface ApiInterface {
     suspend fun getAllBreeds(): Response<AllBreedsResponse>
 
     @GET("breed/{breed_name}/images/random/10")
-    suspend fun getRandomImages(@Path("breed_name") breedName: String) : Response<RandomDogImages>
+    suspend fun getRandomImages(@Path("breed_name") breedName: String): Response<RandomDogImages>
 
     @GET("breed/{breed_name}/{sub_breed}/images/random/10")
-    suspend fun getRandomImagesBySubBreed(@Path("breed_name") breedName: String,@Path("sub_breed") subBreedName: String) : Response<RandomDogImages>
+    suspend fun getRandomImagesBySubBreed(
+        @Path("breed_name") breedName: String,
+        @Path("sub_breed") subBreedName: String
+    ): Response<RandomDogImages>
 }

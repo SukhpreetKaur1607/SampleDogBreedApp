@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
@@ -45,7 +44,6 @@ class MainFragment : Fragment() {
             val selectedBreed = parent.adapter.getItem(position) as DogBreed
             viewModel.setSelection(selectedBreed)
             binding.tvAutoComplete.setText("")
-            binding.tvBreedName.text = selectedBreed.name
 
             if (selectedBreed.subBreed.size > 0) viewModel.getRandomImagesByBreed() else viewModel.getRandomImages()
 

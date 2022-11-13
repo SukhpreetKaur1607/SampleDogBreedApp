@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -72,6 +73,7 @@
             android:textSize="@dimen/TEXT_SIZE_NORMAL"
             android:textAllCaps="true"
             android:textStyle="bold"
+            android:text="@{viewModel._breedName}"
             app:layout_constraintBaseline_toBaselineOf="@id/titleBreed"
             app:layout_constraintBottom_toTopOf="@+id/rvDogImages"
             app:layout_constraintLeft_toRightOf="@id/titleBreed"
@@ -86,6 +88,7 @@
             android:layout_marginTop="@dimen/BASIC_PADDING_DOUBLE"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintLeft_toLeftOf="parent"
+
             app:layout_constraintTop_toBottomOf="@id/titleBreed" />
 
         <ProgressBar
@@ -97,19 +100,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/rvDogImages"
-            android:visibility="gone"/>
-
-        <ImageView
-            android:id="@+id/imgView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/titleBreed"
-            urlImage="@{viewModel._imageString}"
-            app:layout_constraintLeft_toLeftOf="parent"/>
-
-
-
+            android:visibility="@{viewModel._loading ? View.VISIBLE : View.GONE}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
