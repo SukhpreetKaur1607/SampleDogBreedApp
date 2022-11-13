@@ -17,6 +17,7 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
 
     private val requestState: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Empty)
     val _requestState: StateFlow<ApiState> = requestState
+
     private val loading: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val _loading: MutableLiveData<Boolean> = loading
 
@@ -50,7 +51,6 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
             mainRepository.getAllBreeds()
                 .catch { e ->
                     requestState.value = ApiState.Failure(e)
-                    // showError.value = true
                     return@catch
                 }
                 /*to search  complete subBreedList*/
@@ -81,7 +81,6 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
                     _breedList.value = it
                     println("Responsee" + it)
                     println("DogReedValues" + _breedList.value)
-                    //  println(_breedName.value)
                     if (it != null)
                         setAdapterData(it)
                 }
@@ -130,6 +129,7 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
             )
                 .catch { e ->
                     requestState.value = ApiState.Failure(e)
+
                 }.flowOn(Dispatchers.IO)
                 .collect() {
                     requestState.value = ApiState.Success(it)
