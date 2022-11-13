@@ -46,7 +46,6 @@
                 android:padding="@dimen/BASIC_PADDING_DOUBLE"
                 android:text="@={viewModel.searchText}"
                 android:textColor="@color/black"
-                android:textColorHint="#757575"
                 android:textSize="@dimen/TEXT_SIZE_NORMAL" />
         </com.google.android.material.textfield.TextInputLayout>
 

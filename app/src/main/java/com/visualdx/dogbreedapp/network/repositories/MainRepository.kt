@@ -14,10 +14,6 @@ class MainRepository @Inject constructor(private val apiInterface: ApiInterface)
 
     fun getAllBreeds(): Flow<List<DogBreed>?> = flow {
         val res = apiInterface.getAllBreeds()
-        println(res.isSuccessful)
-        println(res.message())
-        println(res.errorBody())
-        println(res.body())
         emit(
             res.body()?.mapDogBreeds()
         )

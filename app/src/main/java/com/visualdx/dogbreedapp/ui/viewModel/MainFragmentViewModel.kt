@@ -79,8 +79,7 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
                 .collect {
                     requestState.value = ApiState.Success(it)
                     _breedList.value = it
-                    println("Responsee" + it)
-                    println("DogReedValues" + _breedList.value)
+                    println("DogBreedValues" + _breedList.value)
                     if (it != null)
                         setAdapterData(it)
                 }

@@ -13,13 +13,13 @@ class customAdapter(private var items: List<DogBreed>) : BaseAdapter(), Filterab
 
     private var listFilter: ListFilter? = null
 
-    override fun getCount(): Int = items!!.size
+    override fun getCount(): Int = items.size
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getView(position, convertView, parent)
     }
 
-    override fun getItem(position: Int) = items?.get(position)
+    override fun getItem(position: Int) = items.get(position)
     override fun getItemId(p0: Int): Long {
         return 0
     }
