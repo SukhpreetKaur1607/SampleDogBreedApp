@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.visualdx.dogbreedapp.ui.viewModel.MainFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        tools:context = "com.visualdx.dogbreedapp.ui.view.MainFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="1dp"
+            app:hintEnabled="true"
+            app:hintAnimationEnabled="false"
+            android:hint="@string/hint_search_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@null"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/tvAutoComplete"
+                entries="@{viewModel.breedList}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:completionThreshold="1"
+                android:padding="@dimen/BASIC_PADDING_DOUBLE"
+                android:text="@={viewModel.searchText}"
+                android:textColor="@color/black"
+                android:textColorHint="#757575"
+                android:textSize="@dimen/TEXT_SIZE_NORMAL" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleBreed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/TITLE_BREED"
+            android:textColor="@color/black"
+            android:textSize="@dimen/TEXT_SIZE_NORMAL"
+            app:layout_constraintBottom_toTopOf="@+id/rvDogImages"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tvBreedName"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayout" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBreedName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/BASIC_PADDING_HALF"
+            android:layout_marginTop="@dimen/BASIC_PADDING"
+            android:textSize="@dimen/TEXT_SIZE_NORMAL"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/titleBreed"
+            app:layout_constraintBottom_toTopOf="@+id/rvDogImages"
+            app:layout_constraintLeft_toRightOf="@id/titleBreed"
+            app:layout_constraintRight_toLeftOf="@+id/titleBreed"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDogImages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            itemViewModels="@{viewModel.dogImagesList}"
+            android:layout_marginTop="@dimen/BASIC_PADDING_DOUBLE"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleBreed" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/titleBreed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rvDogImages"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/titleBreed"
+            urlImage="@{viewModel._imageString}"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

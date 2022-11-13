@@ -1,0 +1,17 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="imageViewModel"
+            type="String" />
+
+    </data>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/myImageView"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/BASIC_PADDING"
+        android:layout_height="@dimen/REGULAR_IMAGE_SIZE"
+        urlImage="@{imageViewModel}"
+        />
+
+</layout>

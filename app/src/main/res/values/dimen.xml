@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="BASIC_PADDING">10dp</dimen>
+    <dimen name="BASIC_PADDING_DOUBLE">20dp</dimen>
+    <dimen name="TEXT_SIZE_NORMAL">18sp</dimen>
+    <dimen name="BASIC_PADDING_HALF">5dp</dimen>
+    <dimen name="REGULAR_IMAGE_SIZE">100dp</dimen>
+
+</resources>

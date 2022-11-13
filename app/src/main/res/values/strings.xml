@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Dog Breed App</string>
+    <string name="hint_search_text">Enter search text</string>
+    <string name="TITLE_BREED">Breed: </string>
+</resources>
