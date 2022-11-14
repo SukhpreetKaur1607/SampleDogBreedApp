@@ -7,9 +7,9 @@ import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
 import com.visualdx.dogbreedapp.databinding.SearchviewDropdownBinding
-import com.visualdx.dogbreedapp.network.model.DogBreed
+import com.visualdx.dogbreedapp.network.model.DogSubBreed
 
-class customAdapter(private var items: List<DogBreed>) : BaseAdapter(), Filterable {
+class customAdapter(private var items: List<DogSubBreed>) : BaseAdapter(), Filterable {
 
     private var listFilter: ListFilter? = null
 
@@ -33,7 +33,7 @@ class customAdapter(private var items: List<DogBreed>) : BaseAdapter(), Filterab
             val binding = SearchviewDropdownBinding.inflate(layoutInflater)
             myHolder = myAutoCompleteHolder(binding)
             myHolder.view.tag = myHolder
-            binding.dropData = items!![position]
+            binding.dropData = items[position]
             binding.executePendingBindings()
         } else
             myHolder = convertView.tag as myAutoCompleteHolder
@@ -67,7 +67,7 @@ class customAdapter(private var items: List<DogBreed>) : BaseAdapter(), Filterab
 
         override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults?) {
             if (!items.isNullOrEmpty()) {
-                items = results?.values as ArrayList<DogBreed>
+                items = results?.values as ArrayList<DogSubBreed>
                 notifyDataSetChanged()
             }
         }

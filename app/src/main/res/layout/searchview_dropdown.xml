@@ -5,7 +5,7 @@
 
         <variable
             name="dropData"
-            type="com.visualdx.dogbreedapp.network.model.DogBreed" />
+            type="com.visualdx.dogbreedapp.network.model.DogSubBreed" />
     </data>
 
     <LinearLayout
@@ -16,19 +16,26 @@
         android:paddingStart="?attr/listPreferredItemPaddingStart"
         android:paddingEnd="?attr/listPreferredItemPaddingEnd">
 
+        <!--  <TextView
+              android:id="@+id/text1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/BASIC_PADDING"
+              android:text='@{dropData.name+` , `+((dropData.subBreed[0].name!=null)?(dropData.subBreed[0].name):(""))}'
+              android:textAppearance="?attr/textAppearanceListItem" />-->
         <TextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/BASIC_PADDING"
-            android:text='@{dropData.name+` , `+((dropData.subBreed[0].name!=null)?(dropData.subBreed[0].name):(""))}'
+            android:text="@{dropData.name}"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
             android:id="@+id/text2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-            <!--textView="@{dropData.subBreed[0]?dropData.subBreed[0]:null}" />-->
+            android:layout_height="wrap_content" />
+        <!--textView="@{dropData.subBreed[0]?dropData.subBreed[0]:null}" />-->
 
 
     </LinearLayout>

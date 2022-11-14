@@ -3,12 +3,14 @@ package com.visualdx.dogbreedapp.ui.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.visualdx.dogbreedapp.ui.DogImagesAdapter
-import com.visualdx.dogbreedapp.ui.customAdapter
-import com.visualdx.dogbreedapp.network.repositories.MainRepository
+import com.visualdx.dogbreedapp.convertToSubBreedList
 import com.visualdx.dogbreedapp.network.ApiState
 import com.visualdx.dogbreedapp.network.model.DogBreed
 import com.visualdx.dogbreedapp.network.model.DogSingleImage
+import com.visualdx.dogbreedapp.network.model.DogSubBreed
+import com.visualdx.dogbreedapp.network.repositories.MainRepository
+import com.visualdx.dogbreedapp.ui.DogImagesAdapter
+import com.visualdx.dogbreedapp.ui.customAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -30,11 +32,11 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
     private val _breedList = MutableStateFlow<List<DogBreed>?>(listOf<DogBreed>())
     val breedList: StateFlow<List<DogBreed>?> = _breedList
 
+    private val _subBreedList = MutableStateFlow<List<DogSubBreed>?>(listOf<DogSubBreed>())
+    val subBreedList: StateFlow<List<DogSubBreed>?> = _subBreedList
+
     private val _dogImagesList = MutableStateFlow<List<String>?>(listOf<String>())
     val dogImagesList: StateFlow<List<String>?> = _dogImagesList
-
-    private val imageString: MutableStateFlow<String?> = MutableStateFlow(null)
-    val _imageString: StateFlow<String?> = imageString
 
     var searchText = MutableStateFlow<String>("")
 
@@ -53,47 +55,35 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
                     requestState.value = ApiState.Failure(e)
                     return@catch
                 }
-                /*to search  complete subBreedList*/
-                /*.combine(searchText) { list, filter ->
-                    list?.filter { master ->
-                        master.name.startsWith(filter, false) || master.subBreed.filter { child ->
-                            child.name.startsWith(filter, false)
-                        }.size > 0
-                    }
-                }*/
-
-                /*Only considering first element of subArray*/
                 .combine(searchText) { list, filter ->
-                    list?.filter { master ->
-                        master.name.startsWith(
-                            filter,
-                            false
-                        ) || (if (master.subBreed.size > 0) (master.subBreed.get(0).name.startsWith(
-                            filter,
-                            false
-                        )) else false)
+                    convertToSubBreedList(list).filter { master ->
+
+                        master.name.substringBefore(",")
+                            .startsWith(filter, false) || master.name.substringAfter(",")
+                            .startsWith(filter, false)
                     }
                 }
+
 
                 .flowOn(Dispatchers.IO)
                 .collect {
                     requestState.value = ApiState.Success(it)
-                    _breedList.value = it
+                    _subBreedList.value = it
                     println("DogBreedValues" + _breedList.value)
-                    if (it != null)
-                        setAdapterData(it)
+                    setAdapterData(it)
                 }
         }
     }
 
-    private fun setAdapterData(it: List<DogBreed>) {
+    private fun setAdapterData(it: List<DogSubBreed>) {
+
         _dropAdapter = customAdapter(it)
         _dropAdapter.notifyDataSetChanged()
     }
 
-    fun setSelection(dogBreed: DogBreed) {
-        breedName.value = dogBreed.name
-        if (dogBreed.subBreed.size > 0) subBreedName.value = dogBreed.subBreed[0].name else ""
+    fun setSelection(dogBreeds: DogSubBreed) {
+        breedName.value = dogBreeds.name.substringBefore(",")
+        subBreedName.value = dogBreeds.name.substringAfter(",")
     }
 
     fun getRandomImages() {
@@ -139,10 +129,6 @@ class MainFragmentViewModel(private val mainRepository: MainRepository) : ViewMo
                 }
         }
 
-    }
-
-    fun setImage(it: DogSingleImage?) {
-        imageString.value = it?.message
     }
 
     private fun setRecyclerViewAdapter(dogImages: List<String>?) {

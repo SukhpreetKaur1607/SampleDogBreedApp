@@ -31,7 +31,7 @@ fun bindImgeURL(view: ImageView, imageUrl: String?) {
 
 @BindingAdapter("entries", requireAll = false)
 fun MaterialAutoCompleteTextView.bindAdapter(
-    entries: List<DogBreed>
+    entries: List<DogSubBreed>
 ) {
     setAdapter(customAdapter(entries))
 }
